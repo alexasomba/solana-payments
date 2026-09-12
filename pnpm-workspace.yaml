@@ -61,6 +61,7 @@ minimumReleaseAgeExclude:
   - "@solana-program/token@0.16.0"
 overrides:
   vite@*: "catalog:"
+  vitest@*: 4.1.11
 peerDependencyRules:
   allowAny:
     - vite
