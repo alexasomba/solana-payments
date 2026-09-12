@@ -58,18 +58,18 @@
     "prepare": "skills-npm"
   },
   "dependencies": {
-    "@solana-program/memo": "0.13.0",
-    "@solana-program/token": "0.16.0",
-    "@solana/kit": "8.0.0"
+    "@solana-program/memo": "0.13.1",
+    "@solana-program/token": "0.16.1",
+    "@solana/kit": "8.3.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
-    "@solana-program/system": "0.14.0",
-    "@tanstack/intent": "^0.3.6",
-    "@types/node": "^24.13.3",
-    "litesvm": "^1.3.0",
+    "@solana-program/system": "0.14.1",
+    "@tanstack/intent": "^0.4.0",
+    "@types/node": "^24.13.4",
+    "litesvm": "^1.4.1",
     "publint": "^0.3.24",
-    "skills-npm": "^1.2.0",
+    "skills-npm": "^1.2.1",
     "typescript": "^6.0.3",
     "vite": "catalog:",
     "vite-plus": "catalog:"
@@ -77,5 +77,5 @@
   "engines": {
     "node": ">=22.0.0"
   },
-  "packageManager": "pnpm@11.22.0"
+  "packageManager": "pnpm@11.26.0"
 }

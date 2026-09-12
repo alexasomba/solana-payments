@@ -1,6 +1,6 @@
 catalog:
-  vite: npm:@voidzero-dev/vite-plus-core@0.2.9
-  vite-plus: 0.2.9
+  vite: npm:@voidzero-dev/vite-plus-core@0.3.1
+  vite-plus: 0.3.1
 minimumReleaseAgeExclude:
   - "@voidzero-dev/vite-plus-core@0.1.22"
   - "@voidzero-dev/vite-plus-darwin-arm64@0.1.22"
@@ -60,7 +60,7 @@ minimumReleaseAgeExclude:
   - "@solana/transactions@8.0.0"
   - "@solana-program/token@0.16.0"
 overrides:
-  vite: "catalog:"
+  vite@*: "catalog:"
 peerDependencyRules:
   allowAny:
     - vite

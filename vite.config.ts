@@ -9,6 +9,7 @@ export default defineConfig({
     clean: true,
     tsconfig: "./tsconfig.pack.json",
     deps: {
+      resolveDepSubpath: true,
       neverBundle: ["@solana/kit", "@solana-program/token", "@solana-program/memo"],
     },
   },
