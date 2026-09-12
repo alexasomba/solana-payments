@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.2](https://github.com/alexasomba/solana-payments/compare/v0.4.1...v0.4.2) (2026-09-12)
+
+
+### Miscellaneous Chores
+
+* align project with vite plus best practices ([0b8c081](https://github.com/alexasomba/solana-payments/commit/0b8c081c1228b30e5ec64d2cfabc4a539f0f1e5a))
+* consolidate vitest config in vite config ([16048f8](https://github.com/alexasomba/solana-payments/commit/16048f850b89b542faf28867998863eff04cc21c))
+
 ## [0.4.1](https://github.com/alexasomba/solana-payments/compare/v0.4.0...v0.4.1) (2026-09-12)
 
 
