@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.0](https://www.npmjs.com/package/solana-payments/v/0.4.0) (2026-08-22)
+## [0.4.0](https://github.com/alexasomba/solana-payments/releases/tag/v0.4.0) (2026-08-22)
 
 ### Features
 
