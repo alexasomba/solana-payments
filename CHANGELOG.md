@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.4.1](https://github.com/alexasomba/solana-payments/compare/v0.4.0...v0.4.1) (2026-09-12)
+
+
+### Bug Fixes
+
+* update vite dependency to use catalog and enhance formatting options ([95d4951](https://github.com/alexasomba/solana-payments/commit/95d4951fdf778e42f650299687ec70d324ec193a))
+
+
+### Miscellaneous Chores
+
+* prepare 0.4.1 release ([05f022d](https://github.com/alexasomba/solana-payments/commit/05f022d5c89192e21724001610af4aae88873312))
+* update dependencies and vite configuration ([2c776b1](https://github.com/alexasomba/solana-payments/commit/2c776b168aa7d46d97922f54e2e8189baf20ef20))
+
+
+### Documentation
+
+* link 0.4.0 changelog to GitHub release ([bef9ab9](https://github.com/alexasomba/solana-payments/commit/bef9ab9ca3b898aa98af2819cc9abe67e44c9ba0))
+
 ## [0.4.0](https://github.com/alexasomba/solana-payments/releases/tag/v0.4.0) (2026-08-22)
 
 ### Features
