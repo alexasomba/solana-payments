@@ -1,4 +1,5 @@
 import { address, createSolanaRpc, generateKeyPairSigner } from "@solana/kit";
+
 import { createSolanaPayments } from "../dist/index.mjs";
 
 const rpcUrl = process.env.SOLANA_RPC_URL ?? "https://api.mainnet.solana.com";

@@ -1,11 +1,11 @@
+import { SolanaPaymentsError } from "./errors.js";
+import { callRpc, getPath, requireRpcMethod } from "./rpc.js";
 import type {
   ClientContext,
   TransactionRetrieveInput,
   TransactionStatus,
   TransactionWaitInput,
 } from "./types.js";
-import { callRpc, getPath, requireRpcMethod } from "./rpc.js";
-import { SolanaPaymentsError } from "./errors.js";
 
 export function createTransactionsModule(ctx: ClientContext) {
   return {

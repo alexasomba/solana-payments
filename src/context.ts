@@ -1,4 +1,5 @@
 import { address, createSolanaRpc, type Address, type TransactionSigner } from "@solana/kit";
+
 import { DEFAULT_COMMITMENT, DEFAULT_GENERIC_REFERENCE_PREFIX, SOLANA_USDT } from "./constants.js";
 import { SolanaPaymentsError } from "./errors.js";
 import type { AddressInput, ClientContext, SolanaPaymentsClientOptions } from "./types.js";

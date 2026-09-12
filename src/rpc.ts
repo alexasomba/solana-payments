@@ -1,6 +1,6 @@
-import type { ClientContext } from "./types.js";
 import { normalizeError, SolanaPaymentsError } from "./errors.js";
 import { withRetry, withTimeout } from "./retry.js";
+import type { ClientContext } from "./types.js";
 
 export async function callRpc<T>(
   ctx: ClientContext,

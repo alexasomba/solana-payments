@@ -1,5 +1,6 @@
-import { describe, expect, it } from "vite-plus/test";
 import { generateKeyPairSigner } from "@solana/kit";
+import { describe, expect, it } from "vite-plus/test";
+
 import { createSolanaUsdt, MemoryIdempotencyStore, type TransferResult } from "../src/index.js";
 
 function sendable<T>(value: T) {

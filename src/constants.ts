@@ -1,4 +1,5 @@
 import { address } from "@solana/kit";
+
 import type { SolanaToken } from "./types.js";
 
 export const SOLANA_USDT_MINT = "Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB";

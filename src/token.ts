@@ -1,7 +1,8 @@
 import { findAssociatedTokenPda, TOKEN_PROGRAM_ADDRESS } from "@solana-program/token";
 import type { Address } from "@solana/kit";
-import type { ClientContext } from "./types.js";
+
 import { callRpc, getPath, readContextSlot, requireRpcMethod } from "./rpc.js";
+import type { ClientContext } from "./types.js";
 
 export async function getAssociatedTokenAddress(owner: Address, mint: Address): Promise<Address> {
   const [ata] = await findAssociatedTokenPda({

@@ -1,5 +1,6 @@
-import { describe, expect, it, vi } from "vite-plus/test";
 import { generateKeyPairSigner } from "@solana/kit";
+import { describe, expect, it, vi } from "vite-plus/test";
+
 import {
   createReadOnlySolanaUsdt,
   createSolanaUsdt,

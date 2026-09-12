@@ -1,8 +1,8 @@
+import { getAddMemoInstruction } from "@solana-program/memo";
 import {
   getCreateAssociatedTokenIdempotentInstruction,
   getTransferCheckedInstruction,
 } from "@solana-program/token";
-import { getAddMemoInstruction } from "@solana-program/memo";
 import {
   appendTransactionMessageInstructions,
   createTransactionMessage,
@@ -12,6 +12,7 @@ import {
   signTransactionMessageWithSigners,
   type Instruction,
 } from "@solana/kit";
+
 import { formatTokenAmount, parseTokenAmount } from "./amounts.js";
 import { normalizeAddress, requireSigner } from "./context.js";
 import { SolanaPaymentsError } from "./errors.js";

@@ -1,7 +1,8 @@
-import { describe, expect, it } from "vite-plus/test";
 import { generateKeyPairSigner } from "@solana/kit";
-import { createSolanaPayments, SOLANA_USDT } from "../src/index.js";
+import { describe, expect, it } from "vite-plus/test";
+
 import { createContext } from "../src/context.js";
+import { createSolanaPayments, SOLANA_USDT } from "../src/index.js";
 import { buildTransferInstructions } from "../src/transfers.js";
 
 describe("token configuration", () => {

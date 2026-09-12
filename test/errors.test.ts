@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vite-plus/test";
+
 import { isRetryableRpcError, SolanaPaymentsError, SolanaUsdtError } from "../src/index.js";
 
 describe("errors", () => {
