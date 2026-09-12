@@ -1,6 +1,6 @@
 {
   "name": "solana-payments",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Developer-friendly Node.js SDK for SPL-token balances, transfers, and payment verification on Solana.",
   "keywords": [
     "payments",

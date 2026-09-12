@@ -6,7 +6,7 @@ license: MIT
 compatibility: Requires Node.js 22+, typescript
 metadata:
   author: alexasomba
-  version: 0.4.1 # x-release-please-version
+  version: 0.4.2 # x-release-please-version
 ---
 
 # Solana Payments SDK Skill
