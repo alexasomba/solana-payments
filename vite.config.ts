@@ -1,6 +1,11 @@
 import { defineConfig } from "vite-plus";
 
 export default defineConfig({
+  test: {
+    environment: "node",
+    globals: true,
+    include: ["test/**/*.test.ts"],
+  },
   pack: {
     entry: ["./src/index.ts"],
     format: ["esm"],
