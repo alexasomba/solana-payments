@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/alexasomba/solana-payments/compare/v1.0.0...v1.0.1) (2026-10-09)
+
+
+### Miscellaneous Chores
+
+* update Solana payments SDK tooling ([b6ad30d](https://github.com/alexasomba/solana-payments/commit/b6ad30dff85fa347f43cc56f4ffceacd8930a068))
+
 ## [1.0.0](https://github.com/alexasomba/solana-payments/compare/v0.4.2...v1.0.0) (2026-10-09)
 
 
