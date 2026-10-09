@@ -1,10 +1,10 @@
 ---
 name: solana-payments
 description: Guidelines and code examples for using the solana-payments library to manage SPL-token balances, create transfers, and handle payments on Solana. Use this skill when the user asks to integrate, configure, or troubleshoot the solana-payments client, fetch token balances, build or simulate token transfers, create payment requests, verify transactions, or poll for confirmations. The library leverages the new @solana/kit and @solana-program/token.
-user-invocable: true
 license: MIT
 compatibility: Requires Node.js 22+, typescript
 metadata:
+  user-invocable: "true"
   author: alexasomba
   version: 0.4.2 # x-release-please-version
 ---
