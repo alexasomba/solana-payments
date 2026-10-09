@@ -110,7 +110,8 @@ codec.encode(Direction.Up); // [0]
 
 ```ts
 type Shape =
-  { __kind: "circle"; radius: number } | { __kind: "rectangle"; width: number; height: number };
+  | { __kind: "circle"; radius: number }
+  | { __kind: "rectangle"; width: number; height: number };
 
 const codec = getDiscriminatedUnionCodec([
   ["circle", getStructCodec([["radius", getU32Codec()]])],

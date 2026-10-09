@@ -158,15 +158,14 @@ anchor-litesvm = "0.3"   # requires anchor-lang ^1.0.0 and litesvm ^0.8.2
 ```
 
 ```typescript
-// Before
-import * as anchor from "@coral-xyz/anchor";
-import { Program, AnchorProvider, BN } from "@coral-xyz/anchor";
-import { Idl } from "@coral-xyz/anchor/dist/cjs/idl"; // deep import
-
 // After
 import * as anchor from "@anchor-lang/core";
 import { Program, AnchorProvider, BN } from "@anchor-lang/core";
 import { Idl } from "@anchor-lang/core"; // IDL types live at root now
+// Before
+import * as anchor from "@coral-xyz/anchor";
+import { Program, AnchorProvider, BN } from "@coral-xyz/anchor";
+import { Idl } from "@coral-xyz/anchor/dist/cjs/idl"; // deep import
 ```
 
 Find all occurrences:

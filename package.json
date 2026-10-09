@@ -49,7 +49,7 @@
     "test:integration": "vp test run test/litesvm.integration.test.ts --testTimeout 120000",
     "test:live": "pnpm run test:integration",
     "smoke:mainnet": "pnpm run build && node examples/smoke.mjs",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc6 -p tsconfig.json --noEmit",
     "lint:package": "publint run --strict",
     "lint:types": "attw --profile esm-only --pack .",
     "check": "vp check",
@@ -58,24 +58,24 @@
     "prepare": "skills-npm"
   },
   "dependencies": {
-    "@solana-program/memo": "0.13.1",
-    "@solana-program/token": "0.16.1",
-    "@solana/kit": "8.3.0"
+    "@solana-program/memo": "0.15.0",
+    "@solana-program/token": "0.17.0",
+    "@solana/kit": "8.4.0"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
-    "@solana-program/system": "0.14.1",
-    "@tanstack/intent": "^0.4.0",
-    "@types/node": "^24.13.4",
-    "litesvm": "^1.4.1",
-    "publint": "^0.3.24",
-    "skills-npm": "^1.2.1",
-    "typescript": "^6.0.3",
+    "@solana-program/system": "0.15.0",
+    "@tanstack/intent": "^0.5.5",
+    "@types/node": "^22.20.5",
+    "litesvm": "^1.6.0",
+    "publint": "^0.3.25",
+    "skills-npm": "^4.0.0",
+    "typescript": "npm:@typescript/typescript6@6.0.2",
     "vite": "catalog:",
     "vite-plus": "catalog:"
   },
   "engines": {
     "node": ">=22.0.0"
   },
-  "packageManager": "pnpm@11.26.0"
+  "packageManager": "pnpm@12.10.1"
 }

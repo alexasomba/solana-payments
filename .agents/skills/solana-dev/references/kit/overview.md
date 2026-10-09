@@ -128,10 +128,10 @@ See [codecs.md](codecs.md) for full codec patterns.
 ### Send SOL Transfer
 
 ```ts
+import { getTransferSolInstruction } from "@solana-program/system";
 import { createClient, address, lamports } from "@solana/kit";
 import { solanaLocalRpc } from "@solana/kit-plugin-rpc";
 import { signerFromFile } from "@solana/kit-plugin-signer";
-import { getTransferSolInstruction } from "@solana-program/system";
 
 const client = await createClient()
   .use(signerFromFile("~/.config/solana/id.json"))
@@ -163,10 +163,10 @@ See [accounts.md](accounts.md) for batch fetching, PDAs, subscriptions, and toke
 Use the `tokenProgram()` plugin from `@solana-program/token` for a fluent token API. It auto-derives ATAs, auto-creates them if needed, and defaults the payer from the client.
 
 ```ts
+import { tokenProgram } from "@solana-program/token";
 import { createClient, generateKeyPairSigner } from "@solana/kit";
 import { solanaLocalRpc } from "@solana/kit-plugin-rpc";
 import { signerFromFile } from "@solana/kit-plugin-signer";
-import { tokenProgram } from "@solana-program/token";
 
 const client = await createClient()
   .use(signerFromFile("~/.config/solana/id.json"))
@@ -211,10 +211,10 @@ See [programs/token.md](programs/token.md) for low-level instruction patterns an
 Programs that ship a Kit plugin follow the same `.use()` pattern:
 
 ```ts
+import { myProgram } from "@my-programs/operations";
 import { createClient } from "@solana/kit";
 import { solanaDevnetRpc } from "@solana/kit-plugin-rpc";
 import { signer } from "@solana/kit-plugin-signer";
-import { myProgram } from "@my-programs/operations";
 
 const client = createClient().use(signer(mySigner)).use(solanaDevnetRpc()).use(myProgram());
 

@@ -224,6 +224,11 @@ const base64 = getBase64EncodedWireTransaction(signedTx);
 
 ```ts
 import {
+  getSetComputeUnitPriceInstruction,
+  estimateComputeUnitLimitFactory,
+  estimateAndUpdateProvisoryComputeUnitLimitFactory,
+} from "@solana-program/compute-budget";
+import {
   pipe,
   createTransactionMessage,
   setTransactionMessageFeePayerSigner,
@@ -235,11 +240,6 @@ import {
   assertIsTransactionWithBlockhashLifetime,
   assertIsTransactionWithinSizeLimit,
 } from "@solana/kit";
-import {
-  getSetComputeUnitPriceInstruction,
-  estimateComputeUnitLimitFactory,
-  estimateAndUpdateProvisoryComputeUnitLimitFactory,
-} from "@solana-program/compute-budget";
 
 async function sendTx(rpc, rpcSubscriptions, signer, instruction) {
   const estimateAndUpdateCU = estimateAndUpdateProvisoryComputeUnitLimitFactory(
@@ -471,8 +471,8 @@ import {
   transactionPlanExecutor,
   transactionPlanner,
 } from "@solana/kit-plugin-instruction-plan";
-import { payer } from "@solana/kit-plugin-signer";
 import { rpc } from "@solana/kit-plugin-rpc";
+import { payer } from "@solana/kit-plugin-signer";
 
 export async function createKitKoraClient(config) {
   return createClient()
@@ -498,8 +498,8 @@ Key pattern: Standard plugins (`rpc`, `payer`, `planAndSendTransactions`) combin
 ```ts
 import { createClient } from "@solana/kit";
 import { planAndSendTransactions } from "@solana/kit-plugin-instruction-plan";
-import { payer } from "@solana/kit-plugin-signer";
 import { rpc, rpcTransactionPlanExecutor, rpcTransactionPlanner } from "@solana/kit-plugin-rpc";
+import { payer } from "@solana/kit-plugin-signer";
 
 // Merchant: read-only, no payer needed
 function createMerchantClient(config) {

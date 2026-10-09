@@ -183,13 +183,13 @@ Before starting any delegation:
      for the exact abort message.
    - Every `phases.<name>.status` MUST be one of
      `"pending" | "in_progress" | "completed" | "skipped" |
-"not_applicable" | "completed_with_known_issues"`, plus the
+     "not_applicable" | "completed_with_known_issues"`, plus the
      legacy literal `"approved"` on `phases.revalidation.status` which
      is treated as equivalent to `"completed"` per
      [schema.md](./schema.md).
    - Every `gates[].decision` MUST be one of
      `"approved" | "approved_with_conditions" | "revised" |
-"skipped" | "rolled_back" | "aborted"` per
+     "skipped" | "rolled_back" | "aborted"` per
      [policy.md §2](./policy.md#2-gate-decisions).
    - On any invalid value: abort with
      _"Invalid {field}: '{value}' in .forge-status.yml. Expected one

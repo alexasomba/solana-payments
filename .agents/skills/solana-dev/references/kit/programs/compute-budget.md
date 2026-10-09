@@ -107,6 +107,11 @@ Build with priority fee → estimate CU via simulation → refresh blockhash (si
 
 ```ts
 import {
+  getSetComputeUnitPriceInstruction,
+  estimateComputeUnitLimitFactory,
+  estimateAndUpdateProvisoryComputeUnitLimitFactory,
+} from "@solana-program/compute-budget";
+import {
   pipe,
   createTransactionMessage,
   setTransactionMessageFeePayerSigner,
@@ -117,11 +122,6 @@ import {
   sendAndConfirmTransactionFactory,
   assertIsTransactionWithBlockhashLifetime,
 } from "@solana/kit";
-import {
-  getSetComputeUnitPriceInstruction,
-  estimateComputeUnitLimitFactory,
-  estimateAndUpdateProvisoryComputeUnitLimitFactory,
-} from "@solana-program/compute-budget";
 
 async function sendWithComputeBudget(rpc, rpcSubscriptions, signer, instruction) {
   // Setup CU estimator

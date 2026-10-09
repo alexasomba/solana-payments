@@ -50,7 +50,6 @@ await client.sendTransaction([ix]);
 ```ts
 // ❌ Type error
 import { IInstruction } from "@solana/kit";
-
 // ✅ Fix: Use Instruction
 import type { Instruction } from "@solana/kit";
 ```
