@@ -49,7 +49,7 @@ export async function retrieveTransaction(
     err:
       typeof status === "object" && status !== null
         ? (status as Record<string, unknown>).err
-        : undefined,
+        : getPath(transaction, ["meta", "err"]),
     transaction,
   };
 }

@@ -70,7 +70,7 @@ describe("createSolanaUsdt", () => {
       mint: quote.mint,
       amount: 1_000_000n,
       displayAmount: "1",
-      sourceTokenAccount: "source",
+      sourceTokenAccount: quote.sourceTokenAccount,
       destinationTokenAccount: quote.destinationTokenAccount,
     };
     const store = new MemoryIdempotencyStore<TransferResult>();

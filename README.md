@@ -172,3 +172,9 @@ SOLANA_SIGNATURE=KnownSignatureHere SOLANA_RPC_URL=https://api.mainnet.solana.co
 ```
 
 The smoke script checks RPC health, version, blockhash, `balances.retrieve`, `transfers.quote`, and payment request creation. It does not sign or send transactions.
+
+## Payment verification and transfer retries
+
+Payment verification requires a successful transaction at confirmed commitment or higher. Failed or merely processed transactions cannot fulfill an intent. Solana Pay URLs use the request's `solanaPayReference` (a base58 32-byte key); business references remain in the memo. Explicit URL references must be valid public keys.
+
+An idempotent transfer requires a store with `withLock(key, operation)`, in addition to `get` and `set`. The lock must serialize all processes sharing that store; a database advisory lock or equivalent atomic lease is appropriate for persistent stores. `MemoryIdempotencyStore` only coordinates callers sharing one instance in one process. Stores must retain signed transaction bytes: the SDK saves them before broadcast and retries those exact bytes after an ambiguous RPC failure. It never signs a replacement for the same key. Reusing a key with another source account, recipient, amount, mint, or RPC endpoint fails. If an old signed transaction expires, reconcile its signature before explicitly starting a new transfer with a new key.

@@ -136,6 +136,8 @@ export interface SolanaPayUrlOptions {
 
 export interface PaymentRequest {
   reference: string;
+  /** Base58-encoded 32-byte key, distinct from the business memo reference. */
+  solanaPayReference?: string | undefined;
   recipient?: string | undefined;
   mint: string;
   amount: bigint;
