@@ -3,14 +3,37 @@ export interface IdempotencyRecord<T = unknown> {
   reference: string;
   result: T;
   createdAt: string;
+  /** Signed payload retained before the first broadcast, for ambiguous RPC retries. */
+  wireTransaction?: string;
+  rpcUrl?: string;
 }
 
 export interface IdempotencyStore<T = unknown> {
+  /** Must serialize all callers sharing this store/key, including across processes. */
+  withLock?<R>(key: string, operation: () => Promise<R>): Promise<R>;
   get(key: string): Promise<IdempotencyRecord<T> | undefined> | IdempotencyRecord<T> | undefined;
   set(key: string, record: IdempotencyRecord<T>): Promise<void> | void;
 }
 
 export class MemoryIdempotencyStore<T = unknown> implements IdempotencyStore<T> {
+  private readonly locks = new Map<string, Promise<void>>();
+
+  async withLock<R>(key: string, operation: () => Promise<R>): Promise<R> {
+    const previous = this.locks.get(key) ?? Promise.resolve();
+    let release!: () => void;
+    const current = new Promise<void>((resolve) => {
+      release = resolve;
+    });
+    this.locks.set(key, current);
+    await previous;
+    try {
+      return await operation();
+    } finally {
+      release();
+      if (this.locks.get(key) === current) this.locks.delete(key);
+    }
+  }
+
   private readonly records = new Map<string, IdempotencyRecord<T>>();
 
   get(key: string): IdempotencyRecord<T> | undefined {

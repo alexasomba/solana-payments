@@ -1,3 +1,7 @@
+import { createHash } from "node:crypto";
+
+import { getBase58Decoder } from "@solana/kit";
+
 import { formatTokenAmount, parseTokenAmount } from "./amounts.js";
 import { normalizeAddress } from "./context.js";
 import { SolanaPaymentsError } from "./errors.js";
@@ -29,6 +33,7 @@ export function createPaymentsModule(ctx: ClientContext) {
       const reference = input.reference ?? createReference(ctx.referencePrefix);
       return {
         reference,
+        solanaPayReference: referenceKey(reference),
         recipient: input.recipient ? normalizeAddress(input.recipient, "recipient") : undefined,
         mint: ctx.mint,
         amount,
@@ -86,9 +91,11 @@ export function toSolanaPayUrl(request: PaymentRequest, options: SolanaPayUrlOpt
   url.searchParams.set("amount", formatTokenAmount(request.amount, request.decimals));
   url.searchParams.set("spl-token", request.mint);
 
-  const references = normalizeReferences(options.reference ?? request.reference);
+  const references = normalizeReferences(
+    options.reference ?? request.solanaPayReference ?? referenceKey(request.reference),
+  );
   for (const reference of references) {
-    url.searchParams.append("reference", reference);
+    url.searchParams.append("reference", normalizeAddress(reference, "Solana Pay reference"));
   }
 
   const memo = options.memo ?? request.memo;
@@ -104,6 +111,7 @@ async function verifySignature(
   input: PaymentVerifyInput,
 ): Promise<VerifiedPayment | undefined> {
   const status = await retrieveTransaction(ctx, signature);
+  if (!isSuccessfulPaymentStatus(ctx, status)) return undefined;
   const payment = extractVerifiedPayment(ctx, status.transaction, signature);
   if (!payment) return undefined;
   payment.slot = status.slot;
@@ -190,6 +198,7 @@ async function monitorPayments(
         : undefined;
     if (typeof signature !== "string") continue;
     const status = await retrieveTransaction(ctx, signature);
+    if (!isSuccessfulPaymentStatus(ctx, status)) continue;
     const payment = extractVerifiedPayment(ctx, status.transaction, signature);
     if (payment?.recipientTokenAccount === recipientTokenAccount) {
       payment.recipient = recipient;
@@ -260,6 +269,7 @@ function extractVerifiedPayment(
   transactionResponse: unknown,
   signature: string,
 ): VerifiedPayment | undefined {
+  if (getPath(transactionResponse, ["meta", "err"]) != null) return undefined;
   const tx = getPath(transactionResponse, ["transaction"]) ?? transactionResponse;
   const message = getPath(tx, ["message"]) ?? getPath(tx, ["transaction", "message"]);
   const instructions = getPath(message, ["instructions"]);
@@ -367,4 +377,21 @@ function createScanDiagnostics(input: {
     cursor: input.finalCursor,
     hasMore: input.hasMore,
   };
+}
+
+function referenceKey(reference: string): string {
+  return getBase58Decoder().decode(createHash("sha256").update(reference).digest());
+}
+
+function isSuccessfulPaymentStatus(
+  ctx: ClientContext,
+  status: Awaited<ReturnType<typeof retrieveTransaction>>,
+): boolean {
+  const rank = (value: string | undefined) =>
+    value === "finalized" ? 3 : value === "confirmed" ? 2 : value === "processed" ? 1 : 0;
+  return (
+    status.err == null &&
+    getPath(status.transaction, ["meta", "err"]) == null &&
+    rank(status.confirmationStatus) >= Math.max(2, rank(ctx.commitment))
+  );
 }

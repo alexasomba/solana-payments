@@ -111,11 +111,11 @@ describe("payments", () => {
     expect(url.pathname).toBe(RECIPIENT);
     expect(url.searchParams.get("amount")).toBe("12.34");
     expect(url.searchParams.get("spl-token")).toBe(SOLANA_USDT_MINT);
-    expect(url.searchParams.get("reference")).toBe("invoice 123/abc");
+    expect(url.searchParams.get("reference")).toBe(request.solanaPayReference);
     expect(url.searchParams.get("memo")).toBe("solana-usdt:invoice 123/abc");
     expect(url.searchParams.get("label")).toBe("Automatic Pallet");
     expect(url.searchParams.get("message")).toBe("Order #123");
-    expect(url.toString()).toContain("reference=invoice+123%2Fabc");
+    expect(url.searchParams.get("reference")).toMatch(/^[1-9A-HJ-NP-Za-km-z]{32,44}$/);
     expect(standaloneUrl.searchParams.get("memo")).toBe("custom memo");
   });
 

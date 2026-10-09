@@ -7,6 +7,7 @@ import {
   appendTransactionMessageInstructions,
   createTransactionMessage,
   getBase64EncodedWireTransaction,
+  getSignatureFromTransaction,
   setTransactionMessageFeePayerSigner,
   setTransactionMessageLifetimeUsingBlockhash,
   signTransactionMessageWithSigners,
@@ -67,6 +68,22 @@ export async function createTransfer(
   ctx: ClientContext,
   input: TransferCreateInput,
 ): Promise<TransferResult> {
+  if (input.idempotencyKey) {
+    const store = ctx.idempotencyStore;
+    if (!store?.withLock)
+      throw new SolanaPaymentsError({
+        code: "INVALID_INPUT",
+        message: "Idempotent transfers require a store with an atomic withLock implementation.",
+      });
+    return store.withLock(input.idempotencyKey, () => createTransferLocked(ctx, input));
+  }
+  return createTransferLocked(ctx, input);
+}
+
+async function createTransferLocked(
+  ctx: ClientContext,
+  input: TransferCreateInput,
+): Promise<TransferResult> {
   const signer = requireSigner(ctx, "transfers.create");
   const reference = input.reference ?? input.idempotencyKey ?? createReference(ctx.referencePrefix);
   const destinationOwner = normalizeAddress(input.to, "recipient");
@@ -81,7 +98,38 @@ export async function createTransfer(
         amount,
         destinationTokenAccount,
         mint: ctx.mint,
+        sourceTokenAccount,
       });
+      if (existing.rpcUrl !== undefined && existing.rpcUrl !== ctx.rpcUrl)
+        throw new SolanaPaymentsError({
+          code: "IDEMPOTENCY_CONFLICT",
+          message: "Idempotency key belongs to another RPC network.",
+        });
+      if (existing.result.confirmationStatus === "signed" && existing.wireTransaction) {
+        const signature = await broadcast(ctx, existing.wireTransaction);
+        const submitted = { ...existing.result, signature, confirmationStatus: "submitted" };
+        await storeIdempotencyResult(
+          ctx,
+          input.idempotencyKey,
+          reference,
+          submitted,
+          existing.wireTransaction,
+        );
+        const status = await waitForTransaction(ctx, { signature });
+        const result = {
+          ...submitted,
+          slot: status.slot,
+          confirmationStatus: status.confirmationStatus,
+        };
+        await storeIdempotencyResult(
+          ctx,
+          input.idempotencyKey,
+          reference,
+          result,
+          existing.wireTransaction,
+        );
+        return result;
+      }
       return existing.result;
     }
   }
@@ -105,20 +153,9 @@ export async function createTransfer(
   );
   const signedTransaction = await signTransactionMessageWithSigners(message);
   const wireTransaction = getBase64EncodedWireTransaction(signedTransaction);
-  const sendTransaction = requireRpcMethod(ctx, "sendTransaction");
-  const signature = String(
-    await callRpc(ctx, "sendTransaction", () =>
-      sendTransaction
-        .call(ctx.rpc, wireTransaction, {
-          encoding: "base64",
-          preflightCommitment: ctx.commitment,
-          maxRetries: ctx.retry?.retries,
-        })
-        .send(),
-    ),
-  );
+  const localSignature = getSignatureFromTransaction(signedTransaction);
   const submittedResult: TransferResult = {
-    signature,
+    signature: localSignature,
     reference,
     idempotencyKey: input.idempotencyKey,
     mint: ctx.mint,
@@ -126,13 +163,30 @@ export async function createTransfer(
     displayAmount: formatTokenAmount(amount, ctx.decimals),
     sourceTokenAccount,
     destinationTokenAccount,
-    confirmationStatus: "submitted",
+    confirmationStatus: "signed",
   };
 
   if (input.idempotencyKey && ctx.idempotencyStore) {
-    await storeIdempotencyResult(ctx, input.idempotencyKey, reference, submittedResult);
+    await storeIdempotencyResult(
+      ctx,
+      input.idempotencyKey,
+      reference,
+      submittedResult,
+      wireTransaction,
+    );
   }
 
+  const signature = await broadcast(ctx, wireTransaction);
+  submittedResult.signature = signature;
+  submittedResult.confirmationStatus = "submitted";
+  if (input.idempotencyKey && ctx.idempotencyStore)
+    await storeIdempotencyResult(
+      ctx,
+      input.idempotencyKey,
+      reference,
+      submittedResult,
+      wireTransaction,
+    );
   const status = await waitForTransaction(ctx, { signature });
   const result: TransferResult = {
     ...submittedResult,
@@ -152,23 +206,32 @@ async function storeIdempotencyResult(
   key: string,
   reference: string,
   result: TransferResult,
+  wireTransaction?: string,
 ): Promise<void> {
   await ctx.idempotencyStore?.set(key, {
     key,
     reference,
     result,
+    ...(wireTransaction ? { wireTransaction } : {}),
+    rpcUrl: ctx.rpcUrl,
     createdAt: new Date().toISOString(),
   });
 }
 
 function assertIdempotentReplay(
   existing: TransferResult,
-  expected: { amount: bigint; destinationTokenAccount: string; mint: string },
+  expected: {
+    amount: bigint;
+    destinationTokenAccount: string;
+    mint: string;
+    sourceTokenAccount: string;
+  },
 ): void {
   if (
     existing.amount !== expected.amount ||
     existing.destinationTokenAccount !== expected.destinationTokenAccount ||
-    existing.mint !== expected.mint
+    existing.mint !== expected.mint ||
+    existing.sourceTokenAccount !== expected.sourceTokenAccount
   ) {
     throw new SolanaPaymentsError({
       code: "IDEMPOTENCY_CONFLICT",
@@ -262,4 +325,19 @@ async function getLatestBlockhash(
     blockhash: blockhash as never,
     lastValidBlockHeight: BigInt(lastValidBlockHeight),
   };
+}
+
+async function broadcast(ctx: ClientContext, wireTransaction: string): Promise<string> {
+  const sendTransaction = requireRpcMethod(ctx, "sendTransaction");
+  return String(
+    await callRpc(ctx, "sendTransaction", () =>
+      sendTransaction
+        .call(ctx.rpc, wireTransaction, {
+          encoding: "base64",
+          preflightCommitment: ctx.commitment,
+          maxRetries: ctx.retry?.retries,
+        })
+        .send(),
+    ),
+  );
 }
