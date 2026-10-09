@@ -10,7 +10,7 @@ Create a new ESM TypeScript package that exposes a Paystack-style factory client
 
 ## Technical Context
 
-**Language/Version**: TypeScript 5.9, Node.js >=20.18
+**Language/Version**: TypeScript 6.0, Node.js >=22.22.2
 
 **Primary Dependencies**: `@solana/kit@6.9.0`, `@solana-program/token@0.13.0`, `@solana-program/memo@0.11.0`
 

@@ -32,9 +32,9 @@ Example `app/providers.tsx`:
 ```tsx
 "use client";
 
-import React from "react";
-import { SolanaProvider } from "@solana/react-hooks";
 import { autoDiscover, createClient } from "@solana/client";
+import { SolanaProvider } from "@solana/react-hooks";
+import React from "react";
 
 const endpoint = process.env.NEXT_PUBLIC_SOLANA_RPC_URL ?? "https://api.devnet.solana.com";
 

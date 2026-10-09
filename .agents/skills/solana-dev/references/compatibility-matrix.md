@@ -158,15 +158,14 @@ grep -r "dist/cjs/idl" --include="*.ts" --include="*.js" .
 ```
 
 ```typescript
-// Before (0.32.x)
-import * as anchor from "@coral-xyz/anchor";
-import { Program, AnchorProvider, BN } from "@coral-xyz/anchor";
-import { Idl } from "@coral-xyz/anchor/dist/cjs/idl";
-
 // After (v1)
 import * as anchor from "@anchor-lang/core";
 import { Program, AnchorProvider, BN } from "@anchor-lang/core";
 import { Idl } from "@anchor-lang/core";
+// Before (0.32.x)
+import * as anchor from "@coral-xyz/anchor";
+import { Program, AnchorProvider, BN } from "@coral-xyz/anchor";
+import { Idl } from "@coral-xyz/anchor/dist/cjs/idl";
 ```
 
 IDL management now uses `anchor idl init` / `anchor idl upgrade` (CLI) or `@solana-program/program-metadata` (npm) — see [migrating-v0.32-to-v1.md](./anchor/migrating-v0.32-to-v1.md#5-close-legacy-idl-accounts-and-re-publish-deploy).

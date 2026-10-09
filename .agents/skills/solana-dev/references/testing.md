@@ -64,8 +64,8 @@ npm i --save-dev litesvm
 ```
 
 ```typescript
-import { LiteSVM } from "litesvm";
 import { PublicKey, Transaction, Keypair } from "@solana/web3.js";
+import { LiteSVM } from "litesvm";
 
 const programId = new PublicKey("YourProgramId11111111111111111111111111111");
 const svm = new LiteSVM();

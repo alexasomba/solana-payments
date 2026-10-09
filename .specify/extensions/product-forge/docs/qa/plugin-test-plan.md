@@ -146,7 +146,7 @@ silently break the plugin. Test these deliberately.
    by introducing heading-level shift (structural) vs whitespace
    (cosmetic).
 9. **Gate decision enum.** `approved | approved_with_conditions |
-revised | skipped | rolled_back | aborted`. `rolled_back` requires
+   revised | skipped | rolled_back | aborted`. `rolled_back` requires
    `rolled_back_to: <phase>`. `skipped` requires `skip_reason` if
    policy active. Test each decision and verify required fields.
 10. **Release-readiness artifact production.** Must invoke

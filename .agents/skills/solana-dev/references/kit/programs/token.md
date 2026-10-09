@@ -179,6 +179,15 @@ await executeInstructionPlan(rpc, plan, { payer });
 ## Complete Pattern: Create Token + Mint
 
 ```ts
+import { getCreateAccountInstruction } from "@solana-program/system";
+import {
+  getInitializeMintInstruction,
+  getMintToInstruction,
+  getMintSize,
+  TOKEN_PROGRAM_ADDRESS,
+  findAssociatedTokenPda,
+  getCreateAssociatedTokenInstruction,
+} from "@solana-program/token";
 import {
   pipe,
   createTransactionMessage,
@@ -191,15 +200,6 @@ import {
   generateKeyPairSigner,
   lamports,
 } from "@solana/kit";
-import {
-  getInitializeMintInstruction,
-  getMintToInstruction,
-  getMintSize,
-  TOKEN_PROGRAM_ADDRESS,
-  findAssociatedTokenPda,
-  getCreateAssociatedTokenInstruction,
-} from "@solana-program/token";
-import { getCreateAccountInstruction } from "@solana-program/system";
 
 // 1. Generate mint keypair
 const mintKeypair = await generateKeyPairSigner();

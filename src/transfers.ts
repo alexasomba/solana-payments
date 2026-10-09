@@ -1,4 +1,4 @@
-import { getAddMemoInstruction } from "@solana-program/memo";
+import { getAddMemoInstruction, LEGACY_MEMO_PROGRAM_ADDRESS_V3 } from "@solana-program/memo";
 import {
   getCreateAssociatedTokenIdempotentInstruction,
   getTransferCheckedInstruction,
@@ -296,7 +296,10 @@ export async function buildTransferInstructions(
   );
 
   instructions.push(
-    getAddMemoInstruction({ memo: createMemo(input.reference, ctx.referencePrefix) }),
+    getAddMemoInstruction(
+      { memo: createMemo(input.reference, ctx.referencePrefix) },
+      { programAddress: LEGACY_MEMO_PROGRAM_ADDRESS_V3 },
+    ),
   );
   return instructions;
 }

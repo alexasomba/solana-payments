@@ -187,8 +187,7 @@ At every phase boundary:
 ```yaml
 gates:
   - phase: pre_impl_review
-    decision:
-      approved # approved | approved_with_conditions
+    decision: approved # approved | approved_with_conditions
       # | revised | skipped | rolled_back | aborted
     timestamp: 2026-04-24T10:15Z
     notes: "design looks good"
@@ -453,7 +452,7 @@ Greenfield standard-mode feature, happy path:
    phase map, offers Phase 0.
 3. Phase 0 (optional) runs problem-discovery. User approves →
    `gates[]` gains an entry, `phases.problem_discovery.status =
-completed`, `digest_path = problem-discovery/digest.md`.
+   completed`, `digest_path = problem-discovery/digest.md`.
 4. Phase 1 runs research. Step 2.5 pulls matching lessons from
    `.product-forge/lessons.md` and includes them. Digest written.
 5. Phase 2 product-spec. Sync-verify Layer 1 runs at the transition.

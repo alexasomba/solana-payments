@@ -87,6 +87,11 @@ const ix = getAdvanceNonceAccountInstruction({
 
 ```ts
 import {
+  getCreateAccountInstruction,
+  getTransferSolInstruction,
+  SYSTEM_PROGRAM_ADDRESS,
+} from "@solana-program/system";
+import {
   pipe,
   createTransactionMessage,
   setTransactionMessageFeePayerSigner,
@@ -98,11 +103,6 @@ import {
   generateKeyPairSigner,
   lamports,
 } from "@solana/kit";
-import {
-  getCreateAccountInstruction,
-  getTransferSolInstruction,
-  SYSTEM_PROGRAM_ADDRESS,
-} from "@solana-program/system";
 
 // Generate new account
 const newAccount = await generateKeyPairSigner();

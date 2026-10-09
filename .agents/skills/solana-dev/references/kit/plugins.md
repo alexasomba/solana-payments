@@ -156,6 +156,7 @@ When the all-in-one bundles don't fit (custom transaction planner, partial capab
 
 ```ts
 import { createClient } from "@solana/kit";
+import { planAndSendTransactions } from "@solana/kit-plugin-instruction-plan";
 import {
   rpc,
   rpcAirdrop,
@@ -164,7 +165,6 @@ import {
   rpcTransactionPlanExecutor,
 } from "@solana/kit-plugin-rpc";
 import { signerFromFile } from "@solana/kit-plugin-signer";
-import { planAndSendTransactions } from "@solana/kit-plugin-instruction-plan";
 
 const client = await createClient()
   .use(rpc("https://api.devnet.solana.com")) // adds client.rpc + client.rpcSubscriptions
@@ -223,10 +223,10 @@ const client = await createClient()
 Codama-generated `@solana-program/*` packages also export program plugins that attach fluent APIs to the client:
 
 ```ts
+import { tokenProgram } from "@solana-program/token";
 import { createClient } from "@solana/kit";
 import { solanaLocalRpc } from "@solana/kit-plugin-rpc";
 import { signerFromFile } from "@solana/kit-plugin-signer";
-import { tokenProgram } from "@solana-program/token";
 
 const client = await createClient()
   .use(signerFromFile("~/.config/solana/id.json"))
