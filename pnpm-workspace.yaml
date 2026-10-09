@@ -60,8 +60,10 @@ minimumReleaseAgeExclude:
   - "@solana/transactions@8.0.0"
   - "@solana-program/token@0.16.0"
 overrides:
-  vite@*: "catalog:"
-  vitest@*: 4.1.11
+  "vite@*": "catalog:"
+  "vitest@*": "4.1.11"
+  "source-map-js": "1.2.2"
+  "tinypool@2": "2.1.2"
 peerDependencyRules:
   allowAny:
     - vite
