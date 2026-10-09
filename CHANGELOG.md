@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.0.0](https://github.com/alexasomba/solana-payments/compare/v0.4.2...v1.0.0) (2026-10-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* verify successful Solana payments and serialize transfer retries
+
+### Bug Fixes
+
+* reject failed payments and serialize Solana transfer retries ([8637058](https://github.com/alexasomba/solana-payments/commit/863705858ed440432dfdd403c41a9ea55f232c25))
+* verify successful Solana payments and serialize transfer retries ([fe57ec0](https://github.com/alexasomba/solana-payments/commit/fe57ec0de78db6a0547c06523042bc34f96973f8))
+
+
+### Miscellaneous Chores
+
+* patch development dependency advisories ([ac77e43](https://github.com/alexasomba/solana-payments/commit/ac77e434a19fa8e8dcc992c267f971e09029442e))
+* validate release skills with the installed toolchain ([8409e43](https://github.com/alexasomba/solana-payments/commit/8409e437481f428d06e9863882da7bf2cb965ff2))
+* validate release skills with the installed toolchain ([da41ec8](https://github.com/alexasomba/solana-payments/commit/da41ec84ff38e2a02abb2732852006466f69ca44))
+
 ## [0.4.2](https://github.com/alexasomba/solana-payments/compare/v0.4.1...v0.4.2) (2026-09-12)
 
 
