@@ -36,18 +36,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Vite+
+        uses: voidzero-dev/setup-vp@v1.20.0
         with:
-          node-version: 20
-
-      - name: Install intent
-        run: npm install -g @tanstack/intent
+          node-version: "24"
+          cache: true
+          run-install: |
+            - args: ["--frozen-lockfile"]
 
       - name: Validate skills
-        run: intent validate --github-summary
+        run: pnpm exec intent validate --github-summary
 
   review:
     name: Check intent skill coverage
@@ -55,22 +55,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Vite+
+        uses: voidzero-dev/setup-vp@v1.20.0
         with:
-          node-version: 20
-
-      - name: Install intent
-        run: npm install -g @tanstack/intent
+          node-version: "24"
+          cache: true
+          run-install: |
+            - args: ["--frozen-lockfile"]
 
       - name: Check skills
         id: stale
         run: |
-          intent stale --github-review --package-label "solana-usdt"
+          pnpm exec intent stale --github-review --package-label "solana-usdt"
 
       - name: Open or update review PR
         if: steps.stale.outputs.has_review == 'true'
