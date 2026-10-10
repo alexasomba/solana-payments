@@ -6,7 +6,7 @@ compatibility: Requires Node.js 22+, typescript
 metadata:
   user-invocable: "true"
   author: alexasomba
-  version: 1.0.1 # x-release-please-version
+  version: 1.0.2 # x-release-please-version
 ---
 
 # Solana Payments SDK Skill
