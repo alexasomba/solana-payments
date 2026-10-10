@@ -178,7 +178,11 @@ async function monitorPayments(
 ): Promise<PaymentMonitorResult> {
   const limit = normalizeSignatureScanLimit(input.limit);
   const recipient = normalizeAddress(input.recipient, "recipient");
-  const recipientTokenAccount = await getAssociatedTokenAddress(recipient, ctx.mint);
+  const recipientTokenAccount = await getAssociatedTokenAddress(
+    recipient,
+    ctx.mint,
+    ctx.tokenProgram,
+  );
   const getSignaturesForAddress = requireRpcMethod(ctx, "getSignaturesForAddress");
   const signatures = await callRpc<unknown[]>(ctx, "getSignaturesForAddress", async () => {
     const response = await getSignaturesForAddress
@@ -249,6 +253,7 @@ async function assertExpectedRecipient(
   const recipientTokenAccount = await getAssociatedTokenAddress(
     normalizeAddress(recipient),
     ctx.mint,
+    ctx.tokenProgram,
   );
   if (payment.recipientTokenAccount === undefined) {
     throw mismatch("Payment recipient token account was not found.", payment);
@@ -284,13 +289,19 @@ function extractVerifiedPayment(
     const parsedType = getPath(instruction, ["parsed", "type"]);
     const parsedInfo = getPath(instruction, ["parsed", "info"]);
     const program = getPath(instruction, ["program"]);
+    const expectedProgram = ctx.tokenProgram === "token-2022" ? "spl-token-2022" : "spl-token";
     if (program === "spl-memo") {
       const parsed = getPath(instruction, ["parsed"]);
       memo =
         typeof parsed === "string" ? parsed : typeof parsedInfo === "string" ? parsedInfo : memo;
       if (memo) reference = parseMemoReference(memo, ctx.referencePrefix) ?? reference;
     }
-    if (parsedType === "transferChecked" && typeof parsedInfo === "object" && parsedInfo !== null) {
+    if (
+      parsedType === "transferChecked" &&
+      (program === undefined || program === expectedProgram) &&
+      typeof parsedInfo === "object" &&
+      parsedInfo !== null
+    ) {
       const info = parsedInfo as Record<string, unknown>;
       if (info.mint === ctx.mint) {
         recipientTokenAccount =

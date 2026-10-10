@@ -53,7 +53,7 @@ const solanaPayUrl = solanaPayments.payments.toSolanaPayUrl(request, {
 ## Features
 
 - Defaults to the `SOLANA_USDT` preset with mint `Es9vMFrzaCERmJfrF4H2FYD4KCoNkY11McCe8BenwNYB`
-- Allows custom SPL-token mint, decimals, and reference-prefix configuration
+- Allows custom SPL-token mint, decimals, token program, and reference-prefix configuration
 - Retrieves token balances via associated token accounts
 - Creates idempotent recipient ATAs before transfers
 - Sends `TransferChecked` with Solana Memo references
@@ -61,6 +61,13 @@ const solanaPayUrl = solanaPayments.payments.toSolanaPayUrl(request, {
 - Builds Solana Pay URLs from payment requests
 - Provides polling monitor helpers for incoming payments
 - Normalizes RPC and transaction errors into `SolanaPaymentsError`
+
+For a mint owned by Token-2022, set `token.program` to `"token-2022"` (or set the
+top-level `tokenProgram` option when using `mint`/`decimals`). This selects the
+Token-2022 ATA derivation and checked-transfer instruction. Transfers currently
+support basic Token-2022 mints; transfer-fee and transfer-hook extensions require
+extension-specific instructions/accounts and are not silently treated as plain
+transfers. Confirm the mint's owning program and extensions before accepting it.
 
 ## Migration from `solana-usdt`
 

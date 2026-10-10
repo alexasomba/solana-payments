@@ -1,14 +1,23 @@
 import { findAssociatedTokenPda, TOKEN_PROGRAM_ADDRESS } from "@solana-program/token";
+import { TOKEN_2022_PROGRAM_ADDRESS } from "@solana-program/token-2022";
 import type { Address } from "@solana/kit";
 
 import { callRpc, getPath, readContextSlot, requireRpcMethod } from "./rpc.js";
-import type { ClientContext } from "./types.js";
+import type { ClientContext, SolanaTokenProgram } from "./types.js";
 
-export async function getAssociatedTokenAddress(owner: Address, mint: Address): Promise<Address> {
+export function getTokenProgramAddress(program: SolanaTokenProgram = "token"): Address {
+  return program === "token-2022" ? TOKEN_2022_PROGRAM_ADDRESS : TOKEN_PROGRAM_ADDRESS;
+}
+
+export async function getAssociatedTokenAddress(
+  owner: Address,
+  mint: Address,
+  program: SolanaTokenProgram = "token",
+): Promise<Address> {
   const [ata] = await findAssociatedTokenPda({
     owner,
     mint,
-    tokenProgram: TOKEN_PROGRAM_ADDRESS,
+    tokenProgram: getTokenProgramAddress(program),
   });
   return ata;
 }

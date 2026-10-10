@@ -6,7 +6,7 @@
 
 ## Summary
 
-Create a new ESM TypeScript package that exposes a Paystack-style factory client for USDT on Solana. The implementation uses Solana Kit for RPC, addresses, signers, transaction messages, signing, and serialization; `@solana-program/token` for ATA and `TransferChecked`; and `@solana-program/memo` for payment references.
+Maintain an ESM TypeScript package that exposes a factory client for SPL-token payments on Solana. The implementation uses Solana Kit for RPC, addresses, signers, transaction messages, signing, and serialization; the selected SPL Token program for ATA derivation and checked transfers; and `@solana-program/memo` for payment references.
 
 ## Technical Context
 

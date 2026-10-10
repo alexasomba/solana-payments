@@ -6,10 +6,13 @@ import type { RetryOptions } from "./retry.js";
 
 export type Commitment = "processed" | "confirmed" | "finalized";
 export type AddressInput = string | Address;
+export type SolanaTokenProgram = "token" | "token-2022";
 
 export interface SolanaToken {
   mint: AddressInput;
   decimals: number;
+  /** Token program that owns the mint. Defaults to the original SPL Token program. */
+  program?: SolanaTokenProgram | undefined;
   symbol?: string;
   referencePrefix?: string;
 }
@@ -40,6 +43,8 @@ export interface SolanaPaymentsClientOptions {
   mint?: AddressInput | undefined;
   decimals?: number | undefined;
   token?: SolanaToken | undefined;
+  /** Token program for the configured mint. Defaults to `token`. */
+  tokenProgram?: SolanaTokenProgram | undefined;
   idempotencyStore?: IdempotencyStore<TransferResult> | undefined;
   rpc?: SolanaRpcLike | undefined;
 }
@@ -60,6 +65,7 @@ export interface ClientContext {
   timeoutMs?: number | undefined;
   retry?: RetryOptions | undefined;
   mint: Address;
+  tokenProgram: SolanaTokenProgram;
   decimals: number;
   referencePrefix: string;
   idempotencyStore?: IdempotencyStore<TransferResult> | undefined;
