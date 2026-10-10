@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/alexasomba/solana-payments/compare/v1.0.2...v1.1.0) (2026-10-10)
+
+
+### Features
+
+* support Token-2022 payments ([#25](https://github.com/alexasomba/solana-payments/issues/25)) ([4954d76](https://github.com/alexasomba/solana-payments/commit/4954d762a41ffaffff537f6a63c6228604b37530)), closes [#24](https://github.com/alexasomba/solana-payments/issues/24)
+
 ## [1.0.2](https://github.com/alexasomba/solana-payments/compare/v1.0.1...v1.0.2) (2026-10-10)
 
 
