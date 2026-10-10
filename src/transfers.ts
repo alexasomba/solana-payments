@@ -3,6 +3,7 @@ import {
   getCreateAssociatedTokenIdempotentInstruction,
   getTransferCheckedInstruction,
 } from "@solana-program/token";
+import { getTransferCheckedInstruction as getTransferCheckedInstruction2022 } from "@solana-program/token-2022";
 import {
   appendTransactionMessageInstructions,
   createTransactionMessage,
@@ -19,7 +20,11 @@ import { normalizeAddress, requireSigner } from "./context.js";
 import { SolanaPaymentsError } from "./errors.js";
 import { createMemo, createReference } from "./idempotency.js";
 import { callRpc, getPath, requireRpcMethod } from "./rpc.js";
-import { getAssociatedTokenAddress, getTokenAccountAmount } from "./token.js";
+import {
+  getAssociatedTokenAddress,
+  getTokenAccountAmount,
+  getTokenProgramAddress,
+} from "./token.js";
 import { waitForTransaction } from "./transactions.js";
 import type {
   ClientContext,
@@ -38,8 +43,16 @@ export function createTransfersModule(ctx: ClientContext) {
       const signer = requireSigner(ctx, "transfers.quote");
       const destinationOwner = normalizeAddress(input.to, "recipient");
       const amount = parseTokenAmount(input.amount, ctx.decimals);
-      const sourceTokenAccount = await getAssociatedTokenAddress(signer.address, ctx.mint);
-      const destinationTokenAccount = await getAssociatedTokenAddress(destinationOwner, ctx.mint);
+      const sourceTokenAccount = await getAssociatedTokenAddress(
+        signer.address,
+        ctx.mint,
+        ctx.tokenProgram,
+      );
+      const destinationTokenAccount = await getAssociatedTokenAddress(
+        destinationOwner,
+        ctx.mint,
+        ctx.tokenProgram,
+      );
       const destination = await getTokenAccountAmount(ctx, destinationTokenAccount);
       const willCreateRecipientAta = !destination.exists;
 
@@ -88,8 +101,16 @@ async function createTransferLocked(
   const reference = input.reference ?? input.idempotencyKey ?? createReference(ctx.referencePrefix);
   const destinationOwner = normalizeAddress(input.to, "recipient");
   const amount = parseTokenAmount(input.amount, ctx.decimals);
-  const sourceTokenAccount = await getAssociatedTokenAddress(signer.address, ctx.mint);
-  const destinationTokenAccount = await getAssociatedTokenAddress(destinationOwner, ctx.mint);
+  const sourceTokenAccount = await getAssociatedTokenAddress(
+    signer.address,
+    ctx.mint,
+    ctx.tokenProgram,
+  );
+  const destinationTokenAccount = await getAssociatedTokenAddress(
+    destinationOwner,
+    ctx.mint,
+    ctx.tokenProgram,
+  );
 
   if (input.idempotencyKey && ctx.idempotencyStore) {
     const existing = await ctx.idempotencyStore.get(input.idempotencyKey);
@@ -280,19 +301,23 @@ export async function buildTransferInstructions(
         ata: normalizeAddress(input.destinationTokenAccount, "destination token account"),
         owner: normalizeAddress(input.destinationOwner, "destination owner"),
         mint: ctx.mint,
+        tokenProgram: getTokenProgramAddress(ctx.tokenProgram),
       }),
     );
   }
 
+  const transferInput = {
+    source: normalizeAddress(input.sourceTokenAccount, "source token account"),
+    mint: ctx.mint,
+    destination: normalizeAddress(input.destinationTokenAccount, "destination token account"),
+    authority: signer,
+    amount: input.amount,
+    decimals: ctx.decimals,
+  };
   instructions.push(
-    getTransferCheckedInstruction({
-      source: normalizeAddress(input.sourceTokenAccount, "source token account"),
-      mint: ctx.mint,
-      destination: normalizeAddress(input.destinationTokenAccount, "destination token account"),
-      authority: signer,
-      amount: input.amount,
-      decimals: ctx.decimals,
-    }),
+    ctx.tokenProgram === "token-2022"
+      ? getTransferCheckedInstruction2022(transferInput)
+      : getTransferCheckedInstruction(transferInput),
   );
 
   instructions.push(

@@ -6,6 +6,13 @@ import type { AddressInput, ClientContext, SolanaPaymentsClientOptions } from ".
 
 export function createContext(options: SolanaPaymentsClientOptions): ClientContext {
   const token = options.token;
+  const tokenProgram = token?.program ?? options.tokenProgram ?? "token";
+  if (tokenProgram !== "token" && tokenProgram !== "token-2022") {
+    throw new SolanaPaymentsError({
+      code: "INVALID_INPUT",
+      message: 'Token program must be either "token" or "token-2022".',
+    });
+  }
   const mintInput = token?.mint ?? options.mint ?? SOLANA_USDT.mint;
   const decimals = token?.decimals ?? options.decimals ?? SOLANA_USDT.decimals;
   const referencePrefix = token
@@ -32,6 +39,7 @@ export function createContext(options: SolanaPaymentsClientOptions): ClientConte
     timeoutMs: options.timeoutMs,
     retry: options.retry,
     mint,
+    tokenProgram,
     decimals,
     referencePrefix,
     idempotencyStore: options.idempotencyStore,

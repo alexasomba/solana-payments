@@ -7,7 +7,7 @@ export function createBalancesModule(ctx: ClientContext) {
   return {
     async retrieve(input: BalanceRetrieveInput): Promise<BalanceResult> {
       const owner = normalizeAddress(input.owner, "owner");
-      const tokenAccount = await getAssociatedTokenAddress(owner, ctx.mint);
+      const tokenAccount = await getAssociatedTokenAddress(owner, ctx.mint, ctx.tokenProgram);
       const account = await getTokenAccountAmount(ctx, tokenAccount);
 
       return {
