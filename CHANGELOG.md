@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.0.2](https://github.com/alexasomba/solana-payments/compare/v1.0.1...v1.0.2) (2026-10-10)
+
+
+### Miscellaneous Chores
+
+* align pnpm toolchain at 12.11.0 ([68d2f0c](https://github.com/alexasomba/solana-payments/commit/68d2f0ccf5d87451ddb57edaf0eb83827a3b163d))
+* bump pnpm to 12.11.2 ([fec81bf](https://github.com/alexasomba/solana-payments/commit/fec81bf9f930ef0eebf213a5e1abcf931f2bfae3))
+* update pnpm to 12.11.0 ([565dbbe](https://github.com/alexasomba/solana-payments/commit/565dbbe5c620fb2411ec136e705930ad585756bf))
+* update pnpm to 12.11.2 ([20bbfad](https://github.com/alexasomba/solana-payments/commit/20bbfad78d881ceac8221d3d59a6265b071f22dc)), closes [#22](https://github.com/alexasomba/solana-payments/issues/22)
+
 ## [1.0.1](https://github.com/alexasomba/solana-payments/compare/v1.0.0...v1.0.1) (2026-10-09)
 
 
