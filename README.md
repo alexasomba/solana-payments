@@ -1,3 +1,5 @@
+[English](README.md) · [Español](README.es-ES.md) · [Français](README.fr-FR.md)
+
 # solana-payments
 
 TypeScript SDK for SPL-token balances, transfers, and payment verification on Solana.
