@@ -1,3 +1,5 @@
+[English](README.md) · [Español](README.es-ES.md) · [Français](README.fr-FR.md)
+
 # Product Forge — SpecKit Extension
 
 > **Full product lifecycle:** Problem Discovery → Research → Product Spec → Revalidation → SpecKit → Pre-Impl Review → Implement → Code Review → Verify → Test → Release Readiness → **API Docs · Security · Analytics · Retrospective**
