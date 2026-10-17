@@ -473,9 +473,9 @@ Consulta [config-template.yml](./config-template.yml) y [docs/config.md](./docs/
 
 Instalación:
 
-  ```bash
-  npm install -g playwright-cli
-  ```
+```bash
+npm install -g playwright-cli
+```
 
 - **Navegadores de Playwright** — necesarios tanto para `playwright-cli` (controlado por agente) como para las ejecuciones de CI/CD `.spec.ts`:
   ```bash
