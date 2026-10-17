@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/alexasomba/solana-payments/compare/v1.1.0...v1.1.1) (2026-10-17)
+
+
+### Documentation
+
+* **readme:** add Spanish and French translations ([#28](https://github.com/alexasomba/solana-payments/issues/28)) ([c5ef1cb](https://github.com/alexasomba/solana-payments/commit/c5ef1cb71f6900165086a8932ac2b92b9622dd5d))
+
 ## [1.1.0](https://github.com/alexasomba/solana-payments/compare/v1.0.2...v1.1.0) (2026-10-10)
 
 
