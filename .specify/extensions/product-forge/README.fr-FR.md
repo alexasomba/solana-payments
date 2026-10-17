@@ -457,12 +457,12 @@ Paramètres clés :
   rapport d'audit). Product Forge délègue les phases V1 à V13 à ce plugin lorsque
   `feature_mode: v-model` est sélectionné.
 
-Installer :
+  Installer :
 
-```bash
-specify extension add v-model \
-  --from https://github.com/leocamello/spec-kit-v-model/archive/refs/tags/v0.5.0.zip
-```
+  ```bash
+  specify extension add v-model \
+    --from https://github.com/leocamello/spec-kit-v-model/archive/refs/tags/v0.5.0.zip
+  ```
 
 > **Dépendance matérielle uniquement pour le mode v-model.** Sans ce plugin,
 > Les modes `lite` et `standard` fonctionnent exactement de la même manière : rien ne se dégrade.
@@ -479,11 +479,11 @@ specify extension add v-model \
 
 - **[`playwright-cli`](https://github.com/microsoft/playwright-cli)** — agent de navigateur interactif utilisé par Phase 8B (`test-run`) pour exécuter des cas de test étape par étape, capturer des captures d'écran, enregistrer des traces et gérer les sessions d'authentification.
 
-Installer :
+  Installer :
 
-```bash
-npm install -g playwright-cli
-```
+  ```bash
+  npm install -g playwright-cli
+  ```
 
 - **Navigateurs Playwright** — requis pour les exécutions CI/CD `playwright-cli` (pilotées par agent) et `.spec.ts` :
   ```bash
